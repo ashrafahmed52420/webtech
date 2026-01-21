@@ -1,20 +1,20 @@
 <?php
-// functions.php - All database logic here
 
 function register_user($pdo, $username, $email, $password, $role) {
     try {
-        $hashed = password_hash($password, PASSWORD_BCRYPT);
+        $hashed = password_hash($password, PASSWORD_BCRYPT);//encrptye pass before store 
+       //execute the query or insert query
         $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
         return $stmt->execute([$username, $email, $hashed, $role]);
     } catch (PDOException $e) {
         return false;
     }
 }
-
+//login data check
 function login_user($pdo, $email, $password) {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");//fetch record of email
     $stmt->execute([$email]);
-    $user = $stmt->fetch();
+    $user = $stmt->fetch();//store in user variable, associative array
 
     if ($user && password_verify($password, $user['password'])) {
         return $user;
@@ -23,9 +23,9 @@ function login_user($pdo, $email, $password) {
 }
 
 function get_transactions($pdo, $user_id) {
-    $stmt = $pdo->prepare("SELECT * FROM transactions WHERE user_id = ? ORDER BY transaction_date DESC, id DESC LIMIT 10");
+    $stmt = $pdo->prepare("SELECT * FROM transactions WHERE user_id = ? ORDER BY transaction_date DESC, id DESC LIMIT 10");// last 10 data
     $stmt->execute([$user_id]);
-    return $stmt->fetchAll();
+    return $stmt->fetchAll();// rerturn all row
 }
 
 function add_transaction($pdo, $user_id, $type, $amount, $category, $description, $date) {
@@ -70,7 +70,7 @@ function get_budget_total($pdo, $user_id) {
     $row = $stmt->fetch();
     return isset($row['total']) ? (float)$row['total'] : 0;
 }
-
+//role  based summary stats
 function get_summary_stats($pdo, $user_id, $role) {
     $stmt = $pdo->prepare("SELECT type, SUM(amount) as total FROM transactions WHERE user_id = ? GROUP BY type");
     $stmt->execute([$user_id]);
