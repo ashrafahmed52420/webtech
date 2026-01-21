@@ -1,5 +1,4 @@
 <?php
-// controllers/profile.php
 
 if (!isset($_SESSION['user_id'])) header("Location: index.php");
 
@@ -12,7 +11,7 @@ if ($action === 'update' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     if (update_profile($pdo, $user_id, $username, $password)) {
         $_SESSION['username'] = $username;
     }
-    header("Location: index.php?controller=dashboard&action=index");
+    header("Location: index.php?controller=dashboard&action=index");//redirect to dashboard
     exit;
 
 } elseif ($action === 'set_budget' && $_SERVER['REQUEST_METHOD'] === 'POST') {
