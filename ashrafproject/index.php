@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'config/db.php';
-require_once 'config/functions.php'; // Load global functions
+require_once 'config/functions.php'; 
 
 $controller = isset($_GET['controller']) ? $_GET['controller'] : 'auth';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
