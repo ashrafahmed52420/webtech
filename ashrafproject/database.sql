@@ -12,20 +12,16 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 -- Transactions Table
--- Covers:
--- Personal: Savings (Income), Expenses
--- Business: Business Income, Business Expenses
--- Homeowner: Home Expenses, Improvement Costs
 CREATE TABLE IF NOT EXISTS transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id INT NOT NULL,-- which user made the transaction
     type ENUM('income', 'expense') NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
     category VARCHAR(100) NOT NULL, 
-    description TEXT,
+    description TEXT,-- optional description
     transaction_date DATE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE-- if user is deleted , transictions also dlt
 );
 
 -- Budgets Table
