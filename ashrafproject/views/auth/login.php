@@ -19,4 +19,4 @@
     <a href="index.php?controller=auth&action=register" class="toggle-link">Create an account</a>
 </div>
 
-<?php include 'views/layout/footer.php'; ?>
+<?php include 'views/layout/footer.php'; ?> 

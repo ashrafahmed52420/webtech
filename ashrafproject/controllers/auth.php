@@ -1,6 +1,4 @@
 <?php
-// controllers/auth.php
-
 if ($action === 'login') {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
@@ -29,7 +27,8 @@ if ($action === 'login') {
         $password = $_POST['password'];
         $role = $_POST['role'];
 
-        if (register_user($pdo, $username, $email, $password, $role)) {
+        if (register_user($pdo, $username, $email, $password, $role))//if register success
+        {
             header("Location: index.php?controller=auth&action=login&success=registered");
             exit;
         } else {
